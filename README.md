@@ -17,6 +17,8 @@ Benchmark tool for Fluent event collector
         -m, --multi NUM                  send multiple records at once (default: 1)
         -c, --concurrent NUM             number of threads (default: 1)
         -s, --size SIZE                  size of a record (default: 100)
+        -G, --no-packed                  don't use lazy deserialization optimize
+
 
 ## Examples
 

@@ -14,6 +14,7 @@ repeat = 1
 para = 1
 multi = 1
 size = 100
+packed = true
 
 config_path = Fluent::DEFAULT_CONFIG_PATH
 
@@ -47,6 +48,10 @@ op.on('-c', '--concurrent NUM', "number of threads (default: 1)", Integer) {|i|
 
 op.on('-s', '--size SIZE', "size of a record (default: 100)", Integer) {|i|
   size = i
+}
+
+op.on('-G', '--no-packed', "don't use lazy deserialization optimize") {|i|
+  packed = false
 }
 
 (class<<self;self;end).module_eval do
@@ -94,7 +99,15 @@ connector = Proc.new {
 }
 
 time = Time.now.to_i
-data = [tag, [[time, record]]*multi].to_msgpack
+if packed
+  data = ''
+  multi.times do
+    [time, record].to_msgpack(data)
+  end
+  data = [tag, data].to_msgpack
+else
+  data = [tag, [[time, record]]*multi].to_msgpack
+end
 
 repeat.times do
   puts "--- #{Time.now}"
