@@ -16,7 +16,6 @@ multi = 1
 size = 100
 
 config_path = Fluent::DEFAULT_CONFIG_PATH
-format = 'json'
 
 op.on('-p', '--port PORT', "fluent tcp port (default: #{port})", Integer) {|i|
   port = s
@@ -34,15 +33,11 @@ op.on('-P', '--path PATH', "unix socket path (default: #{socket_path})") {|s|
   socket_path = s
 }
 
-op.on('-f', '--format FORMAT', "input format (default: #{format})") {|s|
-  format = s
-}
-
 op.on('-r', '--repeat NUM', "repeat number (default: 1)", Integer) {|i|
   repeat = i
 }
 
-op.on('-m', '--multi NUM', "send multiple data at once (default: 1)", Integer) {|i|
+op.on('-m', '--multi NUM', "send multiple records at once (default: 1)", Integer) {|i|
   multi = i
 }
 
@@ -50,7 +45,7 @@ op.on('-c', '--concurrent NUM', "number of threads (default: 1)", Integer) {|i|
   para = i
 }
 
-op.on('-s', '--size SIZE', "size of a data (default: 100)", Integer) {|i|
+op.on('-s', '--size SIZE', "size of a record (default: 100)", Integer) {|i|
   size = i
 }
 
